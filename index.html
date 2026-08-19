@@ -168,8 +168,8 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.app{display:fle
     <p>Manage Vargani, expenses &amp; Pavtis professionally.</p>
     <input id="cloudEmail" type="email" placeholder="Email address" autocomplete="email" style="width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin:4px 0;box-sizing:border-box">
     <input id="cloudPassword" type="password" placeholder="Password" autocomplete="current-password" style="width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin:4px 0;box-sizing:border-box">
-    <button type="button" class="auth-btn auth-google" id="cloudLoginBtn">☁️ Login to Cloud</button>
-    <button type="button" class="auth-btn" id="cloudSignupBtn" style="background:#f5eee8;color:#7b472a">＋ Create Cloud Account</button>
+    <button type="button" class="auth-btn auth-google" id="cloudLoginBtn" onclick="window.loginCloud && window.loginCloud()">☁️ Login to Cloud</button>
+    <button type="button" class="auth-btn" id="cloudSignupBtn" onclick="window.signupCloud && window.signupCloud()" style="background:#f5eee8;color:#7b472a">＋ Create Cloud Account</button>
     <button type="button" class="auth-btn auth-local" id="localLoginBtn" onclick="window.loginLocal && window.loginLocal()">🔐 Continue Locally</button>
     <div class="auth-note">Cloud mode stores your mandal data securely in Supabase. Local mode keeps data on this browser. Logging out never deletes your local data.</div>
     <div id="authStatus" class="user-chip"></div><div id="storageStatus" class="user-chip"></div>
@@ -639,7 +639,7 @@ function shareReceiptMessage(){
  toast('Donor WhatsApp chat opened');
 }
 
-async async function loadHtml2Canvas(){
+async function loadHtml2Canvas(){
  if(window.html2canvas)return window.html2canvas;
  if(window.__html2canvasLoading)return window.__html2canvasLoading;
  window.__html2canvasLoading=new Promise((resolve,reject)=>{
