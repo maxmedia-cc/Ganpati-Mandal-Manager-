@@ -639,27 +639,72 @@ function shareReceiptMessage(){
  toast('Donor WhatsApp chat opened');
 }
 
+async async function loadHtml2Canvas(){
+ if(window.html2canvas)return window.html2canvas;
+ if(window.__html2canvasLoading)return window.__html2canvasLoading;
+ window.__html2canvasLoading=new Promise((resolve,reject)=>{
+   const s=document.createElement('script');
+   s.src='https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+   s.onload=()=>resolve(window.html2canvas);
+   s.onerror=reject;
+   document.head.appendChild(s);
+ });
+ return window.__html2canvasLoading;
+}
+
 async function shareReceiptImage(){
  const e=selectedEntry(); if(!e)return toast('Create a donation first');
+ const receipt=document.getElementById('printReceipt');
+ if(!receipt)return toast('Pavti preview is not available');
+
  try{
    toast('Creating Pavti image…');
-   const svg=receiptSvg(e);
-   const blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'});
-   const url=URL.createObjectURL(blob);
-   const img=new Image();
-   await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=url});
 
-   const canvas=document.createElement('canvas');
-   canvas.width=2000; canvas.height=2000;
-   const ctx=canvas.getContext('2d');
-   ctx.fillStyle='#fffdf8';ctx.fillRect(0,0,2000,2000);
-   ctx.drawImage(img,0,0,2000,2000);
-   URL.revokeObjectURL(url);
+   // IMPORTANT: Capture the actual visible Pavti preview.
+   // This keeps the mobile/desktop logo, Ganpati image, text and spacing
+   // exactly identical to what the user sees on screen.
+   const html2canvas=await loadHtml2Canvas();
 
-   const imageBlob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
+   // Wait for every receipt image to finish loading before the capture.
+   const images=[...receipt.querySelectorAll('img')];
+   await Promise.all(images.map(img=>{
+     if(img.complete)return Promise.resolve();
+     return new Promise(resolve=>{
+       img.addEventListener('load',resolve,{once:true});
+       img.addEventListener('error',resolve,{once:true});
+     });
+   }));
+
+   const canvas=await html2canvas(receipt,{
+     backgroundColor:'#fffdf8',
+     scale:Math.max(2,Math.min(4,window.devicePixelRatio||2)),
+     useCORS:true,
+     allowTaint:false,
+     imageTimeout:15000,
+     logging:false,
+     width:receipt.scrollWidth,
+     height:receipt.scrollHeight,
+     windowWidth:document.documentElement.clientWidth,
+     windowHeight:window.innerHeight
+   });
+
+   // Normalize the captured receipt to a square image without changing
+   // the actual receipt layout. The preview itself is already square.
+   const size=Math.max(canvas.width,canvas.height);
+   const finalCanvas=document.createElement('canvas');
+   finalCanvas.width=size;
+   finalCanvas.height=size;
+   const fctx=finalCanvas.getContext('2d');
+   fctx.fillStyle='#fffdf8';
+   fctx.fillRect(0,0,size,size);
+   fctx.drawImage(canvas,(size-canvas.width)/2,(size-canvas.height)/2);
+
+   const imageBlob=await new Promise((resolve,reject)=>{
+     finalCanvas.toBlob(blob=>blob?resolve(blob):reject(new Error('Image conversion failed')),'image/png');
+   });
    const file=new File([imageBlob],e.receiptNo+'.png',{type:'image/png'});
 
-   // Share ONLY the Pavti image. No pre-filled WhatsApp message is supplied.
+   // Share ONLY the actual Pavti image. No pre-filled WhatsApp message.
    if(navigator.canShare && navigator.canShare({files:[file]})){
      try{
        await navigator.share({
@@ -672,15 +717,16 @@ async function shareReceiptImage(){
      }
    }
 
-   // Browser fallback: save only the Pavti image.
+   // Browser fallback: save only the captured Pavti image.
+   const url=URL.createObjectURL(imageBlob);
    const a=document.createElement('a');
-   a.href=URL.createObjectURL(imageBlob);
+   a.href=url;
    a.download=e.receiptNo+'.png';
    a.click();
-   setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+   setTimeout(()=>URL.revokeObjectURL(url),2000);
    toast('Pavti image saved');
  }catch(err){
-   console.error(err);
+   console.error('Pavti image capture failed:',err);
    toast('Could not create Pavti image');
  }
 }
