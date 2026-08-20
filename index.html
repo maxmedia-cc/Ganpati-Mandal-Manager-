@@ -1,0 +1,1215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ganpati Mandal Manager</title>
+<style>
+:root{--accent:#e56b22;--accent2:#a84413;--bg:#f7f4ee;--card:#fff;--text:#252525;--muted:#777;--line:#e7dfd4;--danger:#c62828;--green:#238636;--shadow:0 8px 24px #0000000d}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{display:flex;min-height:100vh}.sidebar{overflow-y:auto;width:240px;background:#201d1a;color:#fff;padding:18px;position:fixed;inset:0 auto 0 0;overflow:auto}.brand{font-weight:800;font-size:19px;margin:8px 6px 22px}.brand small{display:block;color:#c9bdb2;font-size:11px;font-weight:500;margin-top:4px}.nav button{width:100%;border:0;background:transparent;color:#ddd;text-align:left;padding:12px;border-radius:10px;margin:2px 0}.nav button.active,.nav button:hover{background:#3b322c;color:#fff}
+.developer-credit{
+  margin:28px 6px 8px;
+  padding:12px 8px 0;
+  border-top:1px solid #403934;
+  color:#9f938a;
+  font-size:10px;
+  line-height:1.45;
+  text-align:center;
+}
+.developer-credit strong{
+  display:block;
+  color:#e8d8cc;
+  font-size:12px;
+  margin-top:2px;
+}
+.main{margin-left:240px;width:calc(100% - 240px);padding:22px;max-width:1500px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.top h1{font-size:26px;margin:0}.pill{background:#fff4ea;color:var(--accent2);padding:7px 11px;border-radius:20px;font-size:12px;font-weight:700}.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}.stat .label{color:var(--muted);font-size:13px}.stat .value{font-size:28px;font-weight:800;margin-top:7px}.green{color:var(--green)}.red{color:var(--danger)}.section-title{font-size:18px;font-weight:800;margin:4px 0 14px}.two{grid-template-columns:1.3fr .7fr}.three{grid-template-columns:repeat(3,1fr)}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}.toolbar input,.toolbar select,.form input,.form select,.form textarea{border:1px solid #d9d0c5;border-radius:9px;padding:10px;background:#fff;min-width:0}.toolbar input{flex:1;min-width:180px}.btn{border:1px solid #d6c9bc;background:#fff;padding:9px 13px;border-radius:9px;font-weight:700}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.btn.dark{background:#27221f;border-color:#27221f;color:#fff}.btn.danger{color:#fff;background:var(--danger);border-color:var(--danger)}.btn.small{padding:6px 9px;font-size:12px}.form{display:grid;gap:12px}.form.two-col{grid-template-columns:repeat(2,minmax(0,1fr))}.form label{font-size:12px;font-weight:750;color:#625950;display:grid;gap:6px}.form .full{grid-column:1/-1}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{padding:11px 9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}.table th{font-size:11px;text-transform:uppercase;color:#81766c;background:#fcfaf7}.tag{display:inline-block;padding:4px 8px;border-radius:14px;font-size:11px;font-weight:750;background:#f2eee8}.tag.in{background:#eaf7ed;color:#1d7a34}.tag.out{background:#fff0ef;color:#b52727}.tag.pending{background:#fff6d9;color:#8a6700}.empty{padding:30px;text-align:center;color:#888}.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:15px;z-index:50}.modal.show{display:flex}.modal-box{background:#fff;border-radius:16px;max-width:760px;width:100%;max-height:92vh;overflow:auto;padding:20px}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.modal-head h2{margin:0}.close{border:0;background:#eee;border-radius:50%;width:34px;height:34px}.receipt-page{background:#f3f0e9;padding:18px;display:flex;justify-content:center}
+.reference-receipt{
+  width:1000px!important;height:1000px!important;min-height:1000px!important;
+  background:#fffdf8;border:5px solid var(--accent);border-radius:12px;
+  padding:34px 42px!important;color:#2f261f;position:relative;overflow:hidden;
+  box-shadow:none;
+}
+.reference-receipt:before{content:"";position:absolute;inset:12px;border:1px solid #edc19f;border-radius:9px;pointer-events:none}
+.ref-top{display:flex;justify-content:space-between;align-items:center;font-weight:800;color:#8f3d17;font-size:16px;position:relative;z-index:1}
+.ref-shri{text-align:center;flex:1;margin-left:120px}.ref-est{width:120px;text-align:right}
+.ref-header{display:grid;grid-template-columns:145px 1fr 145px;align-items:center;gap:12px;position:relative;z-index:1;margin-top:7px}
+.ref-logo,.ref-ganpati{height:125px;display:flex;align-items:center;justify-content:center}
+.ref-logo img{width:135px;height:120px;object-fit:contain}.logo-placeholder{width:105px;height:105px;border:3px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:var(--accent)}
+.ref-ganpati img{width:135px;height:120px;object-fit:contain}.ganpati-placeholder{font-size:62px;color:var(--accent)}
+.ref-title{text-align:center}.ref-title h2{font-size:34px;line-height:1.05;margin:0;color:#a84413;font-weight:900}.ref-title h3{font-size:19px;line-height:1.15;margin:6px 0 4px;color:#a84413}.ref-address{font-size:12px;line-height:1.25;color:#665247}.ref-phone{font-size:11px;color:#735f51;margin-top:2px}
+.ref-divider{display:flex;align-items:center;gap:13px;color:#a84413;font-size:23px;font-weight:900;margin:14px 0 11px;position:relative;z-index:1}.ref-divider:before,.ref-divider:after{content:"";height:1.5px;background:#efb48c;flex:1}.ref-divider span{font-size:12px}
+.ref-meta{display:grid;grid-template-columns:1fr 1fr;gap:20px;font-size:15px;padding:5px 4px 10px;position:relative;z-index:1}.ref-meta div:last-child{text-align:right}
+.ref-row{display:flex;align-items:flex-start;gap:18px;border-bottom:1px dashed #cfc1b7;padding:10px 4px;font-size:15px;position:relative;z-index:1}.ref-row span{min-width:155px;color:#4b4039}.ref-row b{flex:1;color:#26211e;line-height:1.35}.ref-two{gap:35px}.ref-two>div{display:flex;gap:12px;flex:1}.ref-two span{min-width:auto}
+.ref-amount{width:54%;margin:18px auto 8px;border:3px solid var(--accent);border-radius:8px;padding:10px 18px;text-align:center;position:relative;z-index:1}.ref-amount-label{font-size:13px;color:#4e4038}.ref-amount strong{font-size:43px;color:#a84413;line-height:1.15;display:block;margin-top:3px}
+.ref-words{text-align:center;font-size:15px;font-weight:800;color:#6d3b20;position:relative;z-index:1;margin:8px 0}.ref-thanks{text-align:center;font-size:17px;font-weight:900;color:#5c4a40;position:relative;z-index:1;margin:10px 0}
+.ref-bottom{display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1;margin-top:12px}.ref-bottom-note{font-size:17px;font-weight:800;color:#5a4c44;margin-left:12px}.ref-sign{width:190px;text-align:center;min-height:105px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}.ref-sign img{width:160px;height:65px;object-fit:contain}.ref-sign-line{width:170px;border-top:1px solid #cba68b;margin-top:2px}.ref-sign b{font-size:13px;color:#a84413;margin-top:5px}.ref-sign small{font-size:10px;color:#665247}.ref-footer{text-align:center;color:#a84413;font-size:20px;font-weight:900;margin-top:13px;position:relative;z-index:1}
+
+.receipt{width:794px;min-height:1123px;background:#fffdf8;border:5px double var(--accent);padding:36px 42px;position:relative;color:#3d2b20}.receipt:before{content:"";position:absolute;inset:13px;border:1px solid #f0b58d;pointer-events:none}.receipt h2{text-align:center;color:var(--accent2);font-size:30px;margin:10px 0 2px}.receipt h3{text-align:center;margin:0 0 22px;color:#543526}.receipt .ganesh{text-align:center;color:var(--accent2);font-size:15px;font-weight:800}.receipt .line-title{display:flex;align-items:center;gap:12px;color:var(--accent2);font-weight:800;font-size:20px;margin:14px 0}.receipt .line-title:before,.receipt .line-title:after{content:"";height:1px;background:#efb28b;flex:1}.receipt-info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 16px}.receipt-row{padding:9px 2px;border-bottom:1px dashed #e3b997}.receipt-row b{color:#33251e}.receipt-amount{border:2px solid var(--accent);border-radius:9px;padding:14px;text-align:center;margin:24px 0}.receipt-amount small{display:block}.receipt-amount strong{display:block;font-size:38px;color:var(--accent2);margin:3px}.words{text-align:center;font-weight:700;color:#8a3e16;margin:15px 0}.thanks{text-align:center;color:var(--accent2);font-weight:800;margin:26px 0}.signature{text-align:right;margin-top:70px}.signature img{max-width:180px;max-height:80px;display:inline-block;object-fit:contain}.footer{text-align:center;color:var(--accent2);font-size:20px;font-weight:900;margin-top:55px}.logo-preview{max-width:220px;max-height:110px;object-fit:contain;border:1px dashed #ccc;padding:5px}.editor{display:grid;grid-template-columns:320px 1fr;gap:18px}.receipt-mini{transform-origin:top left}.switch{display:flex;gap:7px;align-items:center}.help{font-size:12px;color:#777}.kpi{font-size:13px;color:#756b62}.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px}.file{padding:9px;border:1px dashed #cfc4b8;border-radius:9px;background:#fcfaf7}.toast{position:fixed;right:18px;bottom:18px;background:#27221f;color:#fff;padding:12px 16px;border-radius:10px;display:none;z-index:100}.toast.show{display:block}.mobile-menu{display:none}
+.mobile-overlay{display:none}
+
+/* FINAL PAVTI POSITION FIX
+   Keep the receipt as one fixed square canvas and only scale it on small
+   screens. This prevents flex/grid reflow from moving the logo, Ganpati,
+   signature and footer independently.
+*/
+.reference-receipt{
+  box-sizing:border-box;
+  overflow:hidden!important;
+}
+.reference-receipt .ref-header{
+  grid-template-columns:145px minmax(0,1fr) 145px;
+}
+.reference-receipt .ref-logo,
+.reference-receipt .ref-ganpati{
+  width:145px;
+  flex:none;
+}
+.reference-receipt .ref-logo img,
+.reference-receipt .ref-ganpati img{
+  display:block;
+  width:135px;
+  height:120px;
+  object-fit:contain;
+  margin:auto;
+}
+.reference-receipt .ref-bottom{
+  position:absolute;
+  left:42px;
+  right:42px;
+  bottom:67px;
+  margin:0!important;
+  align-items:flex-end;
+}
+.reference-receipt .ref-bottom-note{
+  margin:0 0 8px 12px!important;
+}
+.reference-receipt .ref-sign{
+  margin:0;
+}
+.reference-receipt .ref-footer{
+  position:absolute;
+  left:42px;
+  right:42px;
+  bottom:27px;
+  margin:0!important;
+}
+@media(max-width:900px){
+  .reference-receipt{
+    width:calc(100vw - 32px)!important;
+    height:calc(100vw - 32px)!important;
+    min-height:0!important;
+    aspect-ratio:1/1;
+    padding:3.4vw 4vw!important;
+  }
+  .reference-receipt .ref-header{
+    grid-template-columns:18% 64% 18%!important;
+    gap:0!important;
+  }
+  .reference-receipt .ref-logo,
+  .reference-receipt .ref-ganpati{
+    width:100%!important;
+    height:13vw!important;
+    min-height:48px;
+  }
+  .reference-receipt .ref-logo img,
+  .reference-receipt .ref-ganpati img{
+    width:100%!important;
+    height:100%!important;
+    max-width:120px;
+    object-fit:contain;
+    margin:auto;
+  }
+  .reference-receipt .ref-bottom{
+    left:4vw!important;
+    right:4vw!important;
+    bottom:6.5vw!important;
+  }
+  .reference-receipt .ref-footer{
+    left:4vw!important;
+    right:4vw!important;
+    bottom:2.6vw!important;
+  }
+  .reference-receipt .ref-bottom-note{
+    margin:0 0 0 1vw!important;
+  }
+}
+
+@media(max-width:900px){
+  .receipt-page{overflow-x:hidden;padding:8px}
+  .reference-receipt{
+    width:calc(100vw - 32px)!important;
+    height:auto!important;
+    min-height:0!important;
+    aspect-ratio:1/1;
+    padding:3.4vw 4vw!important;
+    border-width:3px;
+    border-radius:8px;
+    box-sizing:border-box;
+  }
+  .reference-receipt:before{inset:10px}
+  .ref-top{font-size:clamp(8px,2.1vw,16px)}
+  .ref-shri{margin-left:0}
+  .ref-est{width:auto}
+  .ref-header{grid-template-columns:18% 64% 18%;gap:0;margin-top:1vw}
+  .ref-logo,.ref-ganpati{height:13vw;min-height:48px}
+  .ref-logo img{width:100%;height:100%;max-width:120px;object-fit:contain}
+  .ref-ganpati img{width:100%;height:100%;max-width:120px;object-fit:contain}
+  .logo-placeholder{width:10vw;height:10vw;font-size:5vw}
+  .ganpati-placeholder{font-size:8vw}
+  .ref-title h2{font-size:clamp(17px,4.3vw,34px)}
+  .ref-title h3{font-size:clamp(10px,2.3vw,19px);margin:2px 0}
+  .ref-address{font-size:clamp(7px,1.55vw,12px)}
+  .ref-phone{font-size:clamp(7px,1.4vw,11px)}
+  .ref-divider{gap:5px;font-size:clamp(12px,2.8vw,23px);margin:1.5vw 0 1vw}
+  .ref-divider span{font-size:clamp(8px,1.5vw,12px)}
+  .ref-meta{font-size:clamp(9px,1.9vw,15px);gap:5px;padding:1vw 0}
+  .ref-row{gap:8px;padding:1.1vw 0;font-size:clamp(9px,1.9vw,15px)}
+  .ref-row span{min-width:24%;font-size:inherit}
+  .ref-two{gap:10px}.ref-two>div{gap:5px}
+  .ref-amount{width:82%;margin:2vw auto 1vw;padding:1vw 2vw;border-width:2px}
+  .ref-amount-label{font-size:clamp(8px,1.6vw,13px)}
+  .ref-amount strong{font-size:clamp(22px,5.2vw,43px)}
+  .ref-words{font-size:clamp(8px,1.8vw,15px);margin:1vw 0}
+  .ref-thanks{font-size:clamp(9px,2vw,17px);margin:1.3vw 0}
+  .ref-bottom{margin-top:1.2vw}
+  .ref-bottom-note{font-size:clamp(8px,1.8vw,17px);margin-left:1vw}
+  .ref-sign{width:19%;min-height:11vw}
+  .ref-sign img{width:100%;height:7vw;max-width:100px}
+  .ref-sign-line{width:90%;margin-top:0}
+  .ref-sign b{font-size:clamp(7px,1.4vw,13px);margin-top:1px}
+  .ref-sign small{font-size:clamp(6px,1.1vw,10px)}
+  .ref-footer{font-size:clamp(11px,2.4vw,20px);margin-top:1.2vw}
+  .sidebar{overflow-y:auto;
+    display:block;
+    transform:translateX(-105%);
+    transition:transform .18s cubic-bezier(.2,.8,.2,1);
+    z-index:80;
+    box-shadow:8px 0 28px #0003;
+  }
+  .sidebar.mobile-open{transform:translateX(0)}
+  .mobile-overlay{
+    display:block;
+    position:fixed;
+    inset:0;
+    background:#0006;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .18s ease;
+    z-index:70;
+  }
+  .mobile-overlay.show{opacity:1;pointer-events:auto}
+  .mobile-menu{display:inline-flex;vertical-align:middle;align-items:center;justify-content:center;margin-right:6px}
+  .main{margin-left:0;width:100%;padding:14px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .two,.three,.editor{grid-template-columns:1fr}
+  .receipt{transform:none;width:100%;min-height:auto;padding:25px}
+  .receipt-info{grid-template-columns:1fr}
+  .top h1{font-size:21px}
+}
+
+@page{size:210mm 210mm;margin:0}
+@media print{
+ body{background:#fff}
+ .sidebar,.top,.no-print,.modal-head,.toast{display:none!important}
+ .main{margin:0;padding:0;width:100%;max-width:none}
+ .receipt-page{padding:0;background:#fff;display:block}
+ .receipt{
+   border:4px double #e56b22;box-shadow:none;width:210mm;height:210mm;
+   min-height:210mm;max-height:210mm;padding:12mm 13mm;margin:0;
+   overflow:hidden;page-break-after:avoid;page-break-before:avoid;page-break-inside:avoid
+ }
+ .receipt:before{inset:6mm}
+ .receipt h2{font-size:27px;margin:3px 0 1px}
+ .receipt h3{font-size:15px;margin:0 0 5px}
+ .receipt .line-title{margin:7px 0;font-size:18px}
+ .receipt-row{padding:5px 2px}
+ .receipt-amount{margin:10px 0;padding:8px}
+ .receipt-amount strong{font-size:32px}
+ .words{margin:7px 0}.thanks{margin:10px 0}.signature{margin-top:10px}.footer{margin-top:12px}
+}
+
+.auth-screen{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#211c19,#3d3028);display:flex;align-items:center;justify-content:center;padding:20px}
+.auth-card{width:min(430px,100%);background:#fff;border-radius:22px;padding:34px 28px;box-shadow:0 25px 70px #0008;text-align:center}
+.auth-logo{width:82px;height:82px;border-radius:20px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;background:#fff4ea;font-size:42px}
+.auth-card h1{margin:0;color:#9b4316;font-size:28px}.auth-card p{color:#766960;margin:8px 0 25px}
+.auth-btn{width:100%;border:0;border-radius:12px;padding:14px 16px;font-size:15px;font-weight:800;cursor:pointer;margin-top:10px}
+.auth-google{background:#fff;border:1px solid #ddd!important;color:#292421;box-shadow:0 3px 10px #0001}
+.auth-local{background:#a84413;color:#fff}.auth-note{font-size:11px!important;line-height:1.5;margin-top:18px!important}
+.user-chip{font-size:11px;color:#7d7068;margin:6px 0 0}
+.cloud-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;border-radius:20px;padding:4px 8px;background:#edf8ee;color:#2d6b36;margin-top:8px}
+.local-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;border-radius:20px;padding:4px 8px;background:#f8efe8;color:#7b472a;margin-top:8px}
+
+/* ===== ADVANCED DONOR SEARCH + FULL PAVTI DESIGNER ===== */
+.advanced-search{margin-bottom:14px}
+.advanced-search-grid{display:grid;grid-template-columns:2fr repeat(5,minmax(120px,1fr));gap:9px}
+.advanced-search-grid label,.designer-grid label{display:grid;gap:5px;font-size:11px;font-weight:800;color:#665b53}
+.advanced-search-grid input,.advanced-search-grid select,.designer-grid input,.designer-grid select{
+ border:1px solid #d9d0c5;border-radius:9px;padding:9px;background:#fff;min-width:0
+}
+.search-result-bar{margin-top:10px;font-size:12px;color:#6d625b;font-weight:700}
+.designer-shell{display:grid;grid-template-columns:330px minmax(0,1fr);gap:16px}
+.designer-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.designer-grid .full{grid-column:1/-1}
+.designer-section{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.designer-section:first-child{border-top:0;padding-top:0;margin-top:0}
+.designer-preview{background:#f3f0e9;border-radius:12px;padding:12px;overflow:hidden;display:flex;justify-content:center;align-items:flex-start;min-height:260px}
+.designer-preview-stage{position:relative;width:100%;display:flex;justify-content:center;overflow:hidden}
+.designer-preview-stage .reference-receipt{flex:none;transform-origin:top left;margin:0!important}
+
+.designer-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+@media(max-width:1050px){.advanced-search-grid{grid-template-columns:repeat(3,1fr)}.designer-shell{grid-template-columns:1fr}}
+@media(max-width:600px){.advanced-search-grid{grid-template-columns:1fr 1fr}.advanced-search-grid label:first-child{grid-column:1/-1}.designer-grid{grid-template-columns:1fr}.designer-grid .full{grid-column:auto}.designer-preview{padding:8px}}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://uctwpmloednyngcwmani.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_-4A-ZxMZiJAdjoDyvWKfGQ_Q0kJemc_";
+  window.mmSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+</script>
+</head>
+<body>
+<div id="authScreen" class="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">🛕</div>
+    <h1>Ganpati Mandal Manager</h1>
+    <p>Manage Vargani, expenses &amp; Pavtis professionally.</p>
+    <input id="cloudEmail" type="email" placeholder="Email address" autocomplete="email" style="width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin:4px 0;box-sizing:border-box">
+    <input id="cloudPassword" type="password" placeholder="Password" autocomplete="current-password" style="width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;margin:4px 0;box-sizing:border-box">
+    <button type="button" class="auth-btn auth-google" id="cloudLoginBtn" onclick="window.loginCloud && window.loginCloud()">☁️ Login to Cloud</button>
+    <button type="button" class="auth-btn" id="cloudSignupBtn" onclick="window.signupCloud && window.signupCloud()" style="background:#f5eee8;color:#7b472a">＋ Create Cloud Account</button>
+    <button type="button" class="auth-btn auth-local" id="localLoginBtn" onclick="window.loginLocal && window.loginLocal()">🔐 Continue Locally</button>
+    <div class="auth-note">Cloud mode stores your mandal data securely in Supabase. Local mode keeps data on this browser. Logging out never deletes your local data.</div>
+    <div id="authStatus" class="user-chip"></div><div id="storageStatus" class="user-chip"></div>
+  </div>
+</div>
+
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div><div class="app">
+<aside class="sidebar">
+  <div class="brand">🛕 Ganpati Mandal Manager<small>Standalone • Local data storage</small></div>
+  <div class="nav">
+    <button data-page="dashboard" class="active">🏠 Dashboard</button>
+    <button data-page="entries">📒 Entries</button>
+    <button data-page="expenses">💸 Expenses</button>
+    <button data-page="reports">📊 Reports</button>
+    <button data-page="receipt">🧾 Pavti</button>
+    <button data-page="settings">⚙️ Mandal & Settings</button>
+  </div>
+  <div style="margin-top:24px;color:#b9aca2;font-size:11px;padding:8px">Data is stored in this browser. Use Backup regularly.</div>
+  <button id="localLogoutBtn" onclick="logoutManager()" style="margin-top:8px">↪️ Logout</button>
+  <div class="developer-credit">
+    <div>Designed &amp; Developed By</div>
+    <strong>Omkar Harale</strong>
+  </div>
+</aside>
+<main class="main">
+  <div class="top">
+    <div><button class="btn mobile-menu" onclick="toggleMobile()">☰</button> <h1 id="pageTitle" style="display:inline">Dashboard</h1></div>
+    <span class="pill" id="utsavPill">Ganpati Utsav 2026</span>
+  </div>
+  <section id="dashboard" class="page"></section>
+  <section id="entries" class="page" style="display:none"></section>
+  <section id="expenses" class="page" style="display:none"></section>
+  <section id="reports" class="page" style="display:none"></section>
+  <section id="receipt" class="page" style="display:none"></section>
+  <section id="settings" class="page" style="display:none"></section>
+</main>
+</div>
+
+<div id="modal" class="modal"><div class="modal-box"><div class="modal-head"><h2 id="modalTitle">Entry</h2><button class="close" onclick="closeModal()">×</button></div><div id="modalBody"></div></div></div>
+<div id="toast" class="toast"></div>
+
+<script>
+const KEY='ganpati_mandal_manager_v1';
+let state=load();
+let currentPage='dashboard';
+
+function defaults(){return {
+  settings:{shreeGaneshText:'|| श्री गणेशाय नमः ||',mandalName:'साई पॅलेस मित्र मंडळ',subtitle:'आयोजित सार्वजनिक गणेशोत्सव २०२६',year:'2026',establishmentYear:'2023',address:'',phone:'',receiptPrefix:'SPMM',thanks:'आपल्या अमूल्य सहकार्याबद्दल मनःपूर्वक धन्यवाद !',footer:'|| गणपती बाप्पा मोरया ||',designation:'अध्यक्ष / कोषाध्यक्ष',logo:'',signature:'',background:'',ganpati:''},
+  entries:[],expenses:[],receiptSeq:0,expenseSeq:0,template:{accent:'#e56b22'}
+}}
+function load(){try{return Object.assign(defaults(),JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){return defaults()}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));}
+function money(n){return '₹ '+Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function toast(s){let t=document.getElementById('toast');t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+function nextReceipt(){state.receiptSeq++;return `${state.settings.receiptPrefix||'GM'}-${state.settings.year||new Date().getFullYear()}-${String(state.receiptSeq).padStart(4,'0')}`}
+function nextExpense(){state.expenseSeq++;return `EXP-${state.settings.year||new Date().getFullYear()}-${String(state.expenseSeq).padStart(4,'0')}`}
+function dateStr(){return new Date().toLocaleDateString('en-GB')}
+function showPage(p){
+ closeMobileMenu();
+ currentPage=p;document.querySelectorAll('.page').forEach(x=>x.style.display='none');document.getElementById(p).style.display='block';
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));
+ document.getElementById('pageTitle').textContent={dashboard:'Dashboard',entries:'Entries',expenses:'Expenses',reports:'Reports',receipt:'Pavti',settings:'Mandal & Settings'}[p];
+ render();window.scrollTo(0,0);
+}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{showPage(b.dataset.page);closeMobileMenu()});
+function toggleMobile(){
+  const sidebar=document.querySelector('.sidebar');
+  const overlay=document.getElementById('mobileOverlay');
+  const open=sidebar.classList.toggle('mobile-open');
+  overlay.classList.toggle('show',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeMobileMenu(){
+  document.querySelector('.sidebar').classList.remove('mobile-open');
+  document.getElementById('mobileOverlay').classList.remove('show');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileMenu()});
+
+
+function render(){
+ document.getElementById('utsavPill').textContent=`Ganpati Utsav ${state.settings.year}`;
+ ({dashboard:renderDashboard,entries:renderEntries,expenses:renderExpenses,reports:renderReports,receipt:renderReceipt,settings:renderSettings}[currentPage])();
+}
+function totals(){return {income:state.entries.reduce((a,e)=>a+Number(e.amount||0),0),expense:state.expenses.reduce((a,e)=>a+Number(e.amount||0),0)}}
+
+function renderDashboard(){
+ let t=totals(), balance=t.income-t.expense, recent=[...state.entries.map(e=>({...e,type:'Income'})),...state.expenses.map(e=>({...e,type:'Expense'}))].sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,8);
+ document.getElementById('dashboard').innerHTML=`
+ <div class="grid stats">
+  <div class="card stat"><div class="label">Total Vargani / Income</div><div class="value green">${money(t.income)}</div></div>
+  <div class="card stat"><div class="label">Total Expenses</div><div class="value red">${money(t.expense)}</div></div>
+  <div class="card stat"><div class="label">Current Balance</div><div class="value">${money(balance)}</div></div>
+  <div class="card stat"><div class="label">Donors</div><div class="value">${state.entries.length}</div></div>
+ </div>
+ <div class="grid two" style="margin-top:16px">
+  <div class="card"><div class="section-title">Recent Transactions</div>${recent.length?`<div class="table-wrap"><table class="table"><tr><th>Date</th><th>Type</th><th>Name/Description</th><th>Amount</th></tr>${recent.map(x=>`<tr><td>${esc(x.date||'')}</td><td><span class="tag ${x.type==='Income'?'in':'out'}">${x.type}</span></td><td>${esc(x.donorName||x.description||'')}</td><td>${money(x.amount)}</td></tr>`).join('')}</table></div>`:'<div class="empty">No transactions yet.</div>'}</div>
+  <div class="card"><div class="section-title">Quick Actions</div><div class="quick"><button class="btn primary" onclick="openIncome()">＋ Vargani / Income</button><button class="btn dark" onclick="openExpense()">− Expense</button><button class="btn" onclick="showPage('receipt')">🧾 View Pavti</button><button class="btn" onclick="showPage('reports')">📊 Reports</button></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><div class="kpi">Tip: Backup your data before changing phones or clearing browser data.</div></div>
+ </div>`;
+}
+
+function openIncome(editId=null){
+ let e=state.entries.find(x=>x.id===editId)||{};
+ document.getElementById('modalTitle').textContent=editId?'Edit Vargani':'New Vargani / Donation';
+ document.getElementById('modalBody').innerHTML=`<form class="form two-col" onsubmit="saveIncome(event,'${editId||''}')">
+ <label>Donor Name*<input required name="donorName" value="${esc(e.donorName)}" placeholder="श्री./श्रीमती/कुमारी"></label>
+ <label>Mobile Number<input name="mobile" value="${esc(e.mobile)}" inputmode="numeric"></label>
+ <label class="full">Address<textarea name="address" rows="2">${esc(e.address)}</textarea></label>
+ <label>Donation Type<select name="donationType"><option ${e.donationType==='वर्गणी'?'selected':''}>वर्गणी</option><option ${e.donationType==='सर्वसाधारण देणगी'?'selected':''}>सर्वसाधारण देणगी</option><option ${e.donationType==='प्रायोजक देणगी'?'selected':''}>प्रायोजक देणगी</option></select></label>
+ <label>Payment Mode<select name="paymentMode"><option ${e.paymentMode==='Cash'?'selected':''}>Cash</option><option ${e.paymentMode==='UPI'?'selected':''}>UPI</option><option ${e.paymentMode==='Bank'?'selected':''}>Bank Transfer</option><option ${e.paymentMode==='Other'?'selected':''}>Other</option></select></label>
+ <label>Amount (₹)*<input required type="number" min="1" step="1" name="amount" value="${e.amount||''}"></label>
+ <label>Date<input type="date" name="dateISO" value="${e.dateISO||new Date().toISOString().slice(0,10)}"></label>
+ <label>Collector<input name="collector" value="${esc(e.collector)}"></label>
+ <label>Notes<textarea name="notes" rows="2">${esc(e.notes)}</textarea></label>
+ <div class="full"><button class="btn primary" type="submit">${editId?'Update':'Save & Generate Pavti'}</button></div></form>`;
+ document.getElementById('modal').classList.add('show');
+}
+function saveIncome(ev,editId){
+ ev.preventDefault();let f=new FormData(ev.target), obj=Object.fromEntries(f.entries());obj.amount=Number(obj.amount);
+ if(editId){let i=state.entries.findIndex(x=>x.id===editId);obj.id=editId;obj.receiptNo=state.entries[i].receiptNo;obj.createdAt=state.entries[i].createdAt;state.entries[i]=obj;toast('Entry updated');}
+ else {obj.id=crypto.randomUUID();obj.receiptNo=nextReceipt();obj.createdAt=new Date().toISOString();state.entries.push(obj);toast('Vargani saved');}
+ save();closeModal();render(); if(!editId) openReceipt(state.entries[state.entries.length-1].id);
+}
+function openExpense(editId=null){
+ let e=state.expenses.find(x=>x.id===editId)||{};
+ document.getElementById('modalTitle').textContent=editId?'Edit Expense':'New Expense';
+ document.getElementById('modalBody').innerHTML=`<form class="form two-col" onsubmit="saveExpense(event,'${editId||''}')">
+ <label>Category*<select required name="category"><option>Decoration</option><option>Lighting</option><option>Sound</option><option>Idol</option><option>Prasad</option><option>Pooja Material</option><option>Advertisement</option><option>Electricity</option><option>Security</option><option>Cultural Program</option><option>Visarjan</option><option>Miscellaneous</option></select></label>
+ <label>Amount (₹)*<input required type="number" min="1" step="1" name="amount" value="${e.amount||''}"></label>
+ <label>Paid To<input name="paidTo" value="${esc(e.paidTo)}"></label>
+ <label>Payment Mode<select name="paymentMode"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Other</option></select></label>
+ <label>Date<input type="date" name="dateISO" value="${e.dateISO||new Date().toISOString().slice(0,10)}"></label>
+ <label>Description<textarea name="description" rows="2">${esc(e.description)}</textarea></label>
+ <div class="full"><button class="btn primary" type="submit">${editId?'Update':'Save Expense'}</button></div></form>`;
+ document.getElementById('modal').classList.add('show');
+}
+function saveExpense(ev,editId){
+ ev.preventDefault();let f=new FormData(ev.target),obj=Object.fromEntries(f.entries());obj.amount=Number(obj.amount);
+ if(editId){let i=state.expenses.findIndex(x=>x.id===editId);obj.id=editId;obj.expenseNo=state.expenses[i].expenseNo;obj.createdAt=state.expenses[i].createdAt;state.expenses[i]=obj;}
+ else {obj.id=crypto.randomUUID();obj.expenseNo=nextExpense();obj.createdAt=new Date().toISOString();state.expenses.push(obj);}
+ save();closeModal();render();toast('Expense saved');
+}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+
+function getFilteredEntries(){
+ const q=(window.entrySearch||'').toLowerCase();
+ const filters=window.entryFilters||{};
+ const min=filters.min!==''&&filters.min!=null?Number(filters.min):null;
+ const max=filters.max!==''&&filters.max!=null?Number(filters.max):null;
+ return state.entries.filter(e=>{
+   const hay=[e.donorName,e.mobile,e.receiptNo,e.address,e.collector,e.donationType].join(' ').toLowerCase();
+   if(q && !hay.includes(q))return false;
+   if(filters.mode && e.paymentMode!==filters.mode)return false;
+   if(min!==null && Number(e.amount||0)<min)return false;
+   if(max!==null && Number(e.amount||0)>max)return false;
+   if(filters.from && String(e.dateISO||'')<filters.from)return false;
+   if(filters.to && String(e.dateISO||'')>filters.to)return false;
+   return true;
+ });
+}
+function renderEntryResults(){
+ const arr=getFilteredEntries();
+ const total=arr.reduce((a,e)=>a+Number(e.amount||0),0);
+ const box=document.getElementById('entryResults');
+ if(!box)return;
+ box.innerHTML=`<div class="search-result-bar">Showing ${arr.length} of ${state.entries.length} donors • Filtered total: ${money(total)}</div>
+ <div class="card" style="margin-top:14px"><div class="table-wrap"><table class="table"><tr><th>Receipt</th><th>Date</th><th>Donor</th><th>Mobile</th><th>Type</th><th>Mode</th><th>Amount</th><th></th></tr>${arr.length?arr.map(e=>`<tr><td>${esc(e.receiptNo)}</td><td>${esc(e.dateISO||'')}</td><td>${esc(e.donorName)}</td><td>${esc(e.mobile)}</td><td>${esc(e.donationType)}</td><td>${esc(e.paymentMode)}</td><td>${money(e.amount)}</td><td><button class="btn small" onclick="openReceipt('${e.id}')">Pavti</button> <button class="btn small" onclick="openIncome('${e.id}')">Edit</button> <button class="btn small" onclick="deleteEntry('${e.id}')">Delete</button></td></tr>`).join(''):'<tr><td colspan="8" class="empty">No donors match these filters.</td></tr>'}</table></div></div>`;
+}
+function renderEntries(){
+ const filters=window.entryFilters||{};
+ document.getElementById('entries').innerHTML=`<div class="card">
+  <div class="section-title">🔎 Advanced Donor Search</div>
+  <div class="advanced-search-grid">
+   <label>Donor / Mobile / Pavti
+    <input id="advSearchText" placeholder="Search anything..." value="${esc(window.entrySearch||'')}" oninput="advSearchChanged()">
+   </label>
+   <label>Payment Mode
+    <select id="advSearchMode" onchange="advSearchChanged()"><option value="">All</option><option value="Cash">Cash</option><option value="UPI">UPI</option><option value="Bank">Bank Transfer</option><option value="Other">Other</option></select>
+   </label>
+   <label>Min Amount<input id="advSearchMin" type="number" min="0" placeholder="₹ 0" value="${esc(filters.min??'')}" oninput="advSearchChanged()"></label>
+   <label>Max Amount<input id="advSearchMax" type="number" min="0" placeholder="₹ 999999" value="${esc(filters.max??'')}" oninput="advSearchChanged()"></label>
+   <label>From Date<input id="advSearchFrom" type="date" value="${esc(filters.from||'')}" onchange="advSearchChanged()"></label>
+   <label>To Date<input id="advSearchTo" type="date" value="${esc(filters.to||'')}" onchange="advSearchChanged()"></label>
+  </div>
+  <div class="toolbar" style="margin-top:10px;margin-bottom:0">
+   <button class="btn" onclick="clearAdvancedSearch()">✕ Clear Filters</button>
+   <button class="btn primary" onclick="openIncome()">＋ Add Vargani</button>
+   <button class="btn" onclick="exportCSV('entries')">Export CSV</button>
+   <button class="btn dark" onclick="exportReportPDF('entries')">📄 Export Report PDF</button>
+  </div>
+ </div>
+ <div id="entryResults"></div>`;
+ const mode=document.getElementById('advSearchMode');if(mode)mode.value=filters.mode||'';
+ renderEntryResults();
+}
+function advSearchChanged(){
+ window.entrySearch=document.getElementById('advSearchText')?.value||'';
+ window.entryFilters={
+   mode:document.getElementById('advSearchMode')?.value||'',
+   min:document.getElementById('advSearchMin')?.value||'',
+   max:document.getElementById('advSearchMax')?.value||'',
+   from:document.getElementById('advSearchFrom')?.value||'',
+   to:document.getElementById('advSearchTo')?.value||''
+ };
+ // Do NOT rebuild the search form on every keystroke. Re-rendering the input
+ // destroys focus on mobile browsers and makes the keyboard disappear.
+ renderEntryResults();
+}
+function clearAdvancedSearch(){window.entrySearch='';window.entryFilters={};renderEntries();}
+function deleteEntry(id){if(confirm('Delete this donation entry?')){state.entries=state.entries.filter(x=>x.id!==id);save();renderEntries();toast('Deleted')}}
+function renderExpenses(){
+ document.getElementById('expenses').innerHTML=`<div class="card"><div class="toolbar"><button class="btn primary" onclick="openExpense()">＋ Add Expense</button><button class="btn" onclick="exportCSV('expenses')">Export CSV</button><button class="btn dark" onclick="exportReportPDF('expenses')">📄 Export Report PDF</button></div>
+ <div class="table-wrap"><table class="table"><tr><th>ID</th><th>Date</th><th>Category</th><th>Paid To</th><th>Mode</th><th>Amount</th><th>Description</th><th></th></tr>${state.expenses.length?state.expenses.map(e=>`<tr><td>${esc(e.expenseNo)}</td><td>${esc(e.dateISO)}</td><td>${esc(e.category)}</td><td>${esc(e.paidTo)}</td><td>${esc(e.paymentMode)}</td><td>${money(e.amount)}</td><td>${esc(e.description)}</td><td><button class="btn small" onclick="openExpense('${e.id}')">Edit</button> <button class="btn small" onclick="deleteExpense('${e.id}')">Delete</button></td></tr>`).join(''):'<tr><td colspan="8" class="empty">No expenses yet.</td></tr>'}</table></div></div>`;
+}
+function deleteExpense(id){if(confirm('Delete this expense?')){state.expenses=state.expenses.filter(x=>x.id!==id);save();renderExpenses();toast('Deleted')}}
+
+function reportPrintStyles(){
+ return `<style>
+ @page{size:A4 landscape;margin:10mm}
+ *{box-sizing:border-box}body{font-family:Arial,'Noto Sans Devanagari',sans-serif;color:#222;margin:0;background:#fff}
+ h1{font-size:22px;margin:0 0 4px;color:#a84413}h2{font-size:15px;margin:0 0 10px}
+ .head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #e56b22;padding-bottom:10px;margin-bottom:12px}
+ .muted{color:#666;font-size:11px}.summary{display:flex;gap:18px;margin:10px 0 14px}.box{border:1px solid #ddd;border-radius:7px;padding:8px 12px;min-width:150px}.box b{font-size:17px}
+ table{width:100%;border-collapse:collapse;font-size:9px}th,td{border:1px solid #d9d0c8;padding:5px 4px;text-align:left;vertical-align:top}th{background:#f5eee8;color:#6a351b;font-size:8px}tr:nth-child(even){background:#fffaf6}
+ .footer{margin-top:12px;text-align:right;font-size:10px;color:#777}
+ </style>`;
+}
+function exportReportPDF(type){
+ const isEntries=type==='entries', rows=isEntries?state.entries:state.expenses;
+ const t=totals();
+ const title=isEntries?'Vargani / Donation Entries Report':'Expenses Report';
+ const subtitle=isEntries?`Total collection: ${money(t.income)} • Entries: ${rows.length}`:`Total expenses: ${money(t.expense)} • Expenses: ${rows.length}`;
+ let head, body;
+ if(isEntries){
+   head=['Receipt No.','Date','Donor Name','Mobile','Address','Donation Type','Payment Mode','Amount','Collector','Notes'];
+   body=rows.map(e=>[e.receiptNo,e.dateISO,e.donorName,e.mobile,e.address,e.donationType,e.paymentMode,money(e.amount),e.collector,e.notes]);
+ }else{
+   head=['Expense No.','Date','Category','Paid To','Payment Mode','Amount','Description'];
+   body=rows.map(e=>[e.expenseNo,e.dateISO,e.category,e.paidTo,e.paymentMode,money(e.amount),e.description]);
+ }
+ const escR=x=>esc(x||'-');
+ const table='<table><thead><tr>'+head.map(x=>`<th>${escR(x)}</th>`).join('')+'</tr></thead><tbody>'+
+   (body.length?body.map(r=>'<tr>'+r.map(x=>`<td>${escR(x)}</td>`).join('')+'</tr>').join(''):`<tr><td colspan="${head.length}">No records found.</td></tr>`)+
+   '</tbody></table>';
+ const htmlReport=`<!doctype html><html><head><meta charset="utf-8"><title>${escR(title)} - ${escR(state.settings.year)}</title>${reportPrintStyles()}</head><body>
+ <div class="head"><div><h1>${escR(state.settings.mandalName)}</h1><h2>${escR(title)}</h2><div class="muted">${escR(state.settings.subtitle)}${state.settings.address?' • '+escR(state.settings.address):''}</div></div><div class="muted">Generated: ${dateStr()}</div></div>
+ <div class="summary"><div class="box"><div class="muted">${escR(isEntries?'Total Collection':'Total Expenses')}</div><b>${isEntries?money(t.income):money(t.expense)}</b></div><div class="box"><div class="muted">Records</div><b>${rows.length}</b></div>${isEntries?`<div class="box"><div class="muted">Current Balance</div><b>${money(t.income-t.expense)}</b></div>`:''}</div>
+ ${table}<div class="footer">${escR(state.settings.footer)}</div>
+ <script>window.onload=()=>setTimeout(()=>window.print(),300);<\/script></body></html>`;
+ const blob=new Blob([htmlReport],{type:'text/html'});
+ const url=URL.createObjectURL(blob);
+ const w=window.open(url,'_blank');
+ if(!w){toast('Allow pop-ups to export the report');return}
+ setTimeout(()=>URL.revokeObjectURL(url),10000);
+}
+
+function renderReports(){
+ let t=totals(), cats={};state.expenses.forEach(e=>cats[e.category]=(cats[e.category]||0)+Number(e.amount||0));
+ document.getElementById('reports').innerHTML=`<div class="grid three"><div class="card"><div class="section-title">Income</div><div class="value green" style="font-size:25px">${money(t.income)}</div></div><div class="card"><div class="section-title">Expenses</div><div class="value red" style="font-size:25px">${money(t.expense)}</div></div><div class="card"><div class="section-title">Balance</div><div class="value" style="font-size:25px">${money(t.income-t.expense)}</div></div></div>
+ <div class="grid two" style="margin-top:16px"><div class="card"><div class="section-title">Expense by Category</div>${Object.keys(cats).length?'<table class="table">'+Object.entries(cats).map(([k,v])=>`<tr><td>${esc(k)}</td><td>${money(v)}</td></tr>`).join('')+'</table>':'<div class="empty">No expenses.</div>'}</div><div class="card"><div class="section-title">Collection by Payment Mode</div>${['Cash','UPI','Bank Transfer','Other'].map(m=>`<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line)"><span>${m}</span><b>${money(state.entries.filter(e=>e.paymentMode===m).reduce((a,e)=>a+Number(e.amount||0),0))}</b></div>`).join('')}</div></div>
+ <div class="card" style="margin-top:16px"><div class="section-title">Export / Backup</div><button class="btn primary" onclick="backup()">Download JSON Backup</button> <button class="btn dark" onclick="exportReportPDF('entries')">📄 Entries Report PDF</button> <button class="btn dark" onclick="exportReportPDF('expenses')">📄 Expenses Report PDF</button> <button class="btn" onclick="exportCSV('entries')">Income CSV</button> <button class="btn" onclick="exportCSV('expenses')">Expense CSV</button> <button class="btn" onclick="window.print()">Print current view</button></div>`;
+}
+function marathiWords(n){
+ n=Math.floor(Number(n)||0);if(n===0)return 'शून्य रुपये फक्त';
+ const ones=['','एक','दोन','तीन','चार','पाच','सहा','सात','आठ','नऊ','दहा','अकरा','बारा','तेरा','चौदा','पंधरा','सोळा','सतरा','अठरा','एकोणीस','वीस','एकवीस','बावीस','तेवीस','चोवीस','पंचवीस','सव्वीस','सत्तावीस','अठ्ठावीस','एकोणतीस','तीस','एकतीस','बत्तीस','तेहतीस','चौतीस','पस्तीस','छत्तीस','सदतीस','अडतीस','एकोणचाळीस','चाळीस','एक्केचाळीस','बेचाळीस','त्रेचाळीस','चव्वेचाळीस','पंचेचाळीस','सेहेचाळीस','सत्तेचाळीस','अठ्ठेचाळीस','एकोणपन्नास','पन्नास','एक्कावन्न','बावन्न','त्रेपन्न','चोपन्न','पंचावन्न','छप्पन्न','सत्तावन्न','अठ्ठावन्न','एकोणसाठ','साठ','एकसष्ट','बासष्ट','त्रेसष्ट','चौसष्ट','पासष्ट','सहासष्ट','सदुसष्ट','अडुसष्ट','एकोणसत्तर','सत्तर','एकाहत्तर','बहात्तर','त्र्याहत्तर','चौर्‍याहत्तर','पंच्याहत्तर','शहात्तर','सत्याहत्तर','अठ्ठ्याहत्तर','एकोणऐंशी','ऐंशी','एक्क्याऐंशी','ब्याऐंशी','त्र्याऐंशी','चौर्‍याऐंशी','पंच्याऐंशी','शहाऐंशी','सत्त्याऐंशी','अठ्ठ्याऐंशी','एकोणनव्वद','नव्वद','एक्क्याण्णव','ब्याण्णव','त्र्याण्णव','चौर्‍याण्णव','पंच्याण्णव','शहाण्णव','सत्त्याण्णव','अठ्ठ्याण्णव','नव्याण्णव'];
+ function small(x){if(x<100)return ones[x];let h=Math.floor(x/100),r=x%100;return ones[h]+'शे'+(r?' '+ones[r]:'')}
+ let parts=[];let cr=Math.floor(n/10000000);n%=10000000;if(cr)parts.push(small(cr)+' कोटी');
+ let lakh=Math.floor(n/100000);n%=100000;if(lakh)parts.push(small(lakh)+' लाख');
+ let thou=Math.floor(n/1000);n%=1000;if(thou)parts.push(small(thou)+' हजार');
+ if(n)parts.push(small(n));return parts.join(' ')+' रुपये फक्त';
+}
+function toMarathiDigits(s){return String(s).replace(/[0-9]/g,d=>'०१२३४५६७८९'[d])}
+function formatMarathiDate(iso){let d=new Date(iso+'T00:00:00');return toMarathiDigits(d.toLocaleDateString('en-GB'))}
+function receiptHTML(e){
+ const s=state.settings;
+ const accent=esc(state.template.accent||'#e56b22');
+ return `<div class="receipt reference-receipt" id="printReceipt" style="--accent:${accent};background:${esc((state.template&&state.template.bg)||'#fffdf8')};border-color:${accent};border-width:${Number((state.template&&state.template.borderWidth)||5)}px;border-radius:${Number((state.template&&state.template.radius)||12)}px">
+  <div class="ref-top">
+    <div class="ref-shri">${esc(s.shreeGaneshText||"|| श्री गणेशाय नमः ||")}</div>
+    <div class="ref-est">स्थापना ${esc(toMarathiDigits(s.establishmentYear||'- '))}</div>
+  </div>
+  <div class="ref-header">
+    <div class="ref-logo">${s.logo?`<img style="width:${Number((state.template&&state.template.logoSize)||135)}px;height:${Number((state.template&&state.template.logoSize)||120)}px;transform:translateX(${Number((state.template&&state.template.logoX)||0)}px)" src="${s.logo}" alt="Mandal logo">`:`<div class="logo-placeholder">SP</div>`}</div>
+    <div class="ref-title">
+      <h2>${esc(s.mandalName)}</h2>
+      <h3>${esc(s.subtitle)}</h3>
+      ${s.address?`<div class="ref-address">${esc(s.address)}</div>`:`<div class="ref-address">मंडळाचा पत्ता सेटिंग्जमध्ये जोडा</div>`}
+      ${s.phone?`<div class="ref-phone">मो. ${esc(s.phone)}</div>`:''}
+    </div>
+    <div class="ref-ganpati">${s.ganpati?`<img style="width:${Number((state.template&&state.template.ganpatiSize)||135)}px;height:${Number((state.template&&state.template.ganpatiSize)||120)}px;transform:translateX(${Number((state.template&&state.template.ganpatiX)||0)}px)" src="${s.ganpati}" alt="Ganpati">`:`<div class="ganpati-placeholder">ॐ</div>`}</div>
+  </div>
+  <div class="ref-divider"><span>◆</span><b>देणगी पावती</b><span>◆</span></div>
+
+  <div class="ref-meta">
+    <div><b>पावती क्र.</b> ${esc(e.receiptNo)}</div>
+    <div><b>दिनांक:</b> ${formatMarathiDate(e.dateISO)}</div>
+  </div>
+
+  <div class="ref-row"><span>श्री./श्रीमती/कुमारी</span><b>${esc(e.donorName)}</b></div>
+  <div class="ref-row"><span>मोबाईल क्रमांक</span><b>${esc(e.mobile||'-')}</b></div>
+  <div class="ref-row"><span>पत्ता</span><b>${esc(e.address||'-')}</b></div>
+  <div class="ref-row ref-two"><div><span>देणगीचा प्रकार</span><b>${esc(e.donationType||'वर्गणी')}</b></div><div><span>भरणा पद्धत</span><b>${esc(e.paymentMode||'-')}</b></div></div>
+
+  <div class="ref-amount">
+    <div class="ref-amount-label">वर्गणी / देणगी रु.</div>
+    <strong>₹ ${toMarathiDigits(Number(e.amount).toLocaleString('en-IN'))}</strong>
+  </div>
+  <div class="ref-words">${esc(marathiWords(e.amount))}</div>
+  <div class="ref-thanks">${esc(s.thanks)}</div>
+
+  <div class="ref-bottom">
+    <div class="ref-bottom-note">रक्कम प्राप्त झाली, धन्यवाद!</div>
+    <div class="ref-sign">
+      ${s.signature?`<img src="${s.signature}" alt="signature">`:''}
+      <div class="ref-sign-line"></div>
+      <b>${esc(s.designation)}</b>
+      <small>${esc(s.mandalName)}</small>
+    </div>
+  </div>
+  <div class="ref-footer">${esc(s.footer)}</div>
+ </div>`;
+}
+function renderReceipt(){
+ let e=selectedEntry();
+ if(!e && state.entries.length) e=state.entries[state.entries.length-1];
+ if(e) window.selectedReceipt=e.id;
+ document.getElementById('receipt').innerHTML=`<div class="card no-print"><div class="toolbar"><select id="receiptSelect">${state.entries.length?state.entries.map(x=>`<option value="${x.id}" ${e&&x.id===e.id?'selected':''}>${esc(x.receiptNo)} — ${esc(x.donorName)}</option>`).join(''):'<option>No donation entries yet</option>'}</select><button class="btn primary" onclick="openIncome()">＋ New Vargani</button><button class="btn" onclick="printReceipt()">🖨️ Print / Save PDF</button><button class="btn" onclick="shareReceiptPdf()">📄 Share Pavti as PDF</button><button class="btn" onclick="shareReceiptMessage()">💬 Share Pavti Message</button><button class="btn primary" onclick="shareReceiptImage()">🖼️ Share Pavti Image</button></div><div class="help">Pavti is generated from saved donation data. Use Message for the donor chat, or Share Pavti Image to send the actual receipt image through the phone share sheet.</div></div>
+ <div class="receipt-page">${e?receiptHTML(e):'<div class="card empty">Add a donation first to preview the Pavti.</div>'}</div>`;
+ const selector=document.getElementById('receiptSelect');
+ if(selector) selector.addEventListener('change',function(){window.selectedReceipt=this.value;renderReceipt();});
+}
+
+function selectedEntry(){
+ return state.entries.find(e=>e.id===window.selectedReceipt) || state.entries[state.entries.length-1] || null;
+}
+function openReceipt(id){window.selectedReceipt=id;showPage('receipt')}
+async function printReceipt(){
+ let e=selectedEntry();
+ if(!e)return toast('Create a donation first');
+ try{
+   toast('Creating one-page Pavti PDF…');
+   const pdf=await createReceiptPdf(e);
+   const url=URL.createObjectURL(pdf);
+   const a=document.createElement('a');
+   a.href=url;
+   a.download=e.receiptNo+'.pdf';
+   a.click();
+   setTimeout(()=>URL.revokeObjectURL(url),3000);
+   toast('One-page Pavti PDF saved');
+ }catch(err){
+   console.error(err);
+   toast('Could not create Pavti PDF');
+ }
+}
+
+function dataUrlToBytes(dataUrl){
+ const b64=dataUrl.split(',')[1]||'';
+ const bin=atob(b64), out=new Uint8Array(bin.length);
+ for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i);
+ return out;
+}
+function makePdfFromJpeg(jpegBytes,width,height){
+ const chunks=[];const offsets=[0];let pos=0;
+ const add=s=>{const b=new TextEncoder().encode(s);chunks.push(b);pos+=b.length};
+ const addBytes=b=>{chunks.push(b);pos+=b.length};
+ add('%PDF-1.4\n%\xFF\xFF\xFF\xFF\n');
+ function obj(n,body){offsets[n]=pos;add(n+' 0 obj\n'+body+'\nendobj\n')}
+ obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
+ obj(2,'<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
+ obj(3,'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 595.28] /Resources << /XObject << /Im1 4 0 R >> >> /Contents 5 0 R >>');
+ offsets[4]=pos;add('4 0 obj\n<< /Type /XObject /Subtype /Image /Width '+width+' /Height '+height+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+jpegBytes.length+' >>\nstream\n');addBytes(jpegBytes);add('\nendstream\nendobj\n');
+ const stream='q\n595.28 0 0 595.28 0 0 cm\n/Im1 Do\nQ\n';
+ obj(5,'<< /Length '+stream.length+' >>\nstream\n'+stream+'endstream');
+ const xref=pos;add('xref\n0 6\n0000000000 65535 f \n');
+ for(let i=1;i<=5;i++)add(String(offsets[i]).padStart(10,'0')+' 00000 n \n');
+ add('trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF');
+ const total=new Uint8Array(pos);let at=0;for(const c of chunks){total.set(c,at);at+=c.length}
+ return new Blob([total],{type:'application/pdf'});
+}
+function receiptSvg(e){
+ const s=state.settings, accent=state.template.accent||'#e56b22';
+ const escSvg=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+ const wrap=(txt,max=58)=>{let w=String(txt||'-').split(/\s+/),a=[],line='';for(const x of w){if((line+' '+x).trim().length>max){if(line)a.push(line);line=x}else line=(line+' '+x).trim()}if(line)a.push(line);return a.slice(0,2)};
+ const donorAddr=wrap(e.address||'-',58), mandalAddr=wrap(s.address||'-',58), words=wrap(marathiWords(e.amount),72);
+ const logo=s.logo?`<image href="${s.logo}" x="48" y="82" width="155" height="125" preserveAspectRatio="xMidYMid meet"/>`:'';
+ const ganpati=s.ganpati?`<image href="${s.ganpati}" x="785" y="72" width="145" height="135" preserveAspectRatio="xMidYMid meet"/>`:`<text x="855" y="165" text-anchor="middle" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="58" fill="#a84413">ॐ</text>`;
+ const sig=s.signature?`<image href="${s.signature}" x="790" y="835" width="145" height="65" preserveAspectRatio="xMidYMid meet"/>`:'';
+ const mandalY=132;
+ const subtitleY=mandalY+(mandalAddr.length*17)+18;
+ const dividerY=subtitleY+28;
+ const metaY=dividerY+42;
+ const donorY=metaY+43;
+ const mobileY=donorY+48;
+ const donorAddrY=mobileY+48;
+ const donorAddrLines=donorAddr.slice(0,2);
+ const donorAddrEnd=donorAddrY+((donorAddrLines.length-1)*21);
+ const lowerY=donorAddrEnd+58;
+ const amountY=lowerY+30;
+ const wordsY=amountY+105;
+ const thanksY=wordsY+42;
+
+ return `<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
+ <rect width="1000" height="1000" fill="#fffdf8"/>
+ <rect x="12" y="12" width="976" height="976" rx="12" fill="none" stroke="${accent}" stroke-width="5"/>
+ <rect x="25" y="25" width="950" height="950" rx="9" fill="none" stroke="#f0b58d"/>
+ ${logo}${ganpati}
+ <text x="500" y="58" text-anchor="middle" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="17" font-weight="700" fill="#8a3e16">${escSvg(s.shreeGaneshText||' || श्री गणेशाय नमः || ')}</text>
+ <text x="500" y="105" text-anchor="middle" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="31" font-weight="800" fill="#a84413">${escSvg(s.mandalName)}</text>
+ ${mandalAddr.map((x,i)=>`<text x="500" y="${mandalY+i*17}" text-anchor="middle" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="12" fill="#654b3c">${escSvg(x)}</text>`).join('')}
+ <text x="500" y="${subtitleY}" text-anchor="middle" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="15" font-weight="700" fill="#543526">${escSvg(s.subtitle)}</text>
+ <line x1="50" y1="${dividerY-8}" x2="370" y2="${dividerY-8}" stroke="#efb28b"/>
+ <line x1="630" y1="${dividerY-8}" x2="950" y2="${dividerY-8}" stroke="#efb28b"/>
+ <text x="500" y="${dividerY}" text-anchor="middle" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="20" font-weight="800" fill="#a84413">◆ देणगी पावती ◆</text>
+ <text x="50" y="${metaY}" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="15" fill="#33251e">पावती क्र.: <tspan font-weight="800" fill="#a84413">${escSvg(e.receiptNo)}</tspan></text>
+ <text x="950" y="${metaY}" text-anchor="end" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="15" fill="#33251e">दिनांक: ${escSvg(formatMarathiDate(e.dateISO))}</text>
+
+ <g font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="15" fill="#33251e">
+   <text x="50" y="${donorY}">श्री./श्रीमती/कुमारी: <tspan font-weight="700">${escSvg(e.donorName)}</tspan></text>
+   <line x1="50" y1="${donorY+15}" x2="950" y2="${donorY+15}" stroke="#e3b997" stroke-dasharray="3 4"/>
+   <text x="50" y="${mobileY}">मोबाईल क्रमांक: ${escSvg(e.mobile||'-')}</text>
+   <line x1="50" y1="${mobileY+15}" x2="950" y2="${mobileY+15}" stroke="#e3b997" stroke-dasharray="3 4"/>
+   <text x="50" y="${donorAddrY}">पत्ता: ${escSvg(donorAddrLines[0])}</text>
+   ${donorAddrLines.slice(1).map((x,i)=>`<text x="105" y="${donorAddrY+21+i*21}">${escSvg(x)}</text>`).join('')}
+   <line x1="50" y1="${donorAddrEnd+15}" x2="950" y2="${donorAddrEnd+15}" stroke="#e3b997" stroke-dasharray="3 4"/>
+   <text x="50" y="${lowerY}">देणगीचा प्रकार: ${escSvg(e.donationType||'वर्गणी')}</text>
+   <text x="540" y="${lowerY}">भरणा पद्धत: ${escSvg(e.paymentMode||'-')}</text>
+ </g>
+
+ <rect x="95" y="${amountY}" width="810" height="90" rx="10" fill="#fffaf4" stroke="${accent}" stroke-width="2"/>
+ <text x="120" y="${amountY+40}" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="15" fill="#33251e">रक्कम</text>
+ <text x="500" y="${amountY+56}" text-anchor="middle" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="38" font-weight="900" fill="#a84413">₹ ${escSvg(toMarathiDigits(Number(e.amount).toLocaleString('en-IN')))}/-</text>
+ <text x="880" y="${amountY+40}" text-anchor="end" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="15" fill="#33251e">रुपये फक्त</text>
+ <text x="500" y="${wordsY}" text-anchor="middle" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="15" font-weight="700" fill="#8a3e16">रक्कम (अक्षरी): ${escSvg(words.join(' '))}</text>
+ <text x="500" y="${thanksY}" text-anchor="middle" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="16" font-weight="800" fill="#a84413">${escSvg(s.thanks)}</text>
+
+ ${sig}
+ <line x1="770" y1="905" x2="950" y2="905" stroke="#cda17f"/>
+ <text x="860" y="928" text-anchor="middle" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="13" font-weight="700" fill="#a84413">${escSvg(s.designation)}</text>
+ <text x="860" y="946" text-anchor="middle" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="11" fill="#654b3c">${escSvg(s.mandalName)}</text>
+ <text x="500" y="955" text-anchor="middle" font-family="Noto Sans Devanagari, Mangal, sans-serif" font-size="20" font-weight="900" fill="#a84413">${escSvg(s.footer)}</text>
+ </svg>`;
+}
+async function createReceiptPdf(e){
+ const svg=receiptSvg(e), blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob);
+ const img=new Image();
+ await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=url});
+ const canvas=document.createElement('canvas');canvas.width=2000;canvas.height=2000;
+ const ctx=canvas.getContext('2d');ctx.fillStyle='#fffdf8';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
+ URL.revokeObjectURL(url);
+ const jpg=canvas.toDataURL('image/jpeg',0.94);
+ return makePdfFromJpeg(dataUrlToBytes(jpg),canvas.width,canvas.height);
+}
+
+async function shareReceiptPdf(){
+ const e=selectedEntry(); if(!e)return toast('Create a donation first');
+ try{
+   toast('Creating Pavti PDF…');
+   const pdf=await createReceiptPdf(e);
+   const file=new File([pdf],e.receiptNo+'.pdf',{type:'application/pdf'});
+   if(navigator.canShare && navigator.canShare({files:[file]})){
+     try{
+       await navigator.share({
+         title:'देणगी पावती '+e.receiptNo,
+         files:[file]
+       });
+       return;
+     }catch(err){
+       if(err && err.name==='AbortError')return;
+     }
+   }
+   const url=URL.createObjectURL(pdf);
+   const a=document.createElement('a');
+   a.href=url;
+   a.download=e.receiptNo+'.pdf';
+   a.click();
+   setTimeout(()=>URL.revokeObjectURL(url),3000);
+   toast('Pavti PDF saved');
+ }catch(err){
+   console.error(err);
+   toast('Could not create Pavti PDF');
+ }
+}
+
+function buildWhatsAppMessage(e){
+ const s=state.settings;
+ return [
+   '🙏 गणपती बाप्पा मोरया!',
+   '',
+   '🛕 मंडळाची माहिती',
+   `मंडळाचे नाव: ${s.mandalName||'-'}`,
+   `उत्सव: ${s.subtitle||'-'}`,
+   `पत्ता: ${s.address||'-'}`,
+   `संपर्क क्रमांक: ${s.phone||'-'}`,
+   '',
+   '👤 देणगीदाराची माहिती',
+   `नाव: ${e.donorName||'-'}`,
+   `मोबाईल क्रमांक: ${e.mobile||'-'}`,
+   `पत्ता: ${e.address||'-'}`,
+   '',
+   '🧾 देणगीची माहिती',
+   `पावती क्र.: ${e.receiptNo||'-'}`,
+   `दिनांक: ${formatMarathiDate(e.dateISO)}`,
+   `देणगीचा प्रकार: ${e.donationType||'-'}`,
+   `भरणा पद्धत: ${e.paymentMode||'-'}`,
+   `रक्कम: ₹${Number(e.amount||0).toLocaleString('en-IN')}/-`,
+   `रक्कम (अक्षरी): ${marathiWords(e.amount)}`,
+   '',
+   s.thanks||'आपल्या अमूल्य सहकार्याबद्दल मनःपूर्वक धन्यवाद !',
+   '',
+   s.footer||'|| गणपती बाप्पा मोरया ||'
+ ].join('\n');
+}
+
+function donorWhatsAppNumber(e){
+ const phone=String(e.mobile||'').replace(/\D/g,'');
+ if(phone.length<10)return null;
+ return phone.length===10?'91'+phone:phone;
+}
+
+function shareReceiptMessage(){
+ const e=selectedEntry(); if(!e)return toast('Create a donation first');
+ const waPhone=donorWhatsAppNumber(e);
+ if(!waPhone)return toast('Enter a valid donor mobile number first');
+ const msg=buildWhatsAppMessage(e);
+ window.open('https://wa.me/'+waPhone+'?text='+encodeURIComponent(msg),'_blank');
+ toast('Donor WhatsApp chat opened');
+}
+
+async function loadHtml2Canvas(){
+ if(window.html2canvas)return window.html2canvas;
+ if(window.__html2canvasLoading)return window.__html2canvasLoading;
+ window.__html2canvasLoading=new Promise((resolve,reject)=>{
+   const s=document.createElement('script');
+   s.src='https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+   s.onload=()=>resolve(window.html2canvas);
+   s.onerror=reject;
+   document.head.appendChild(s);
+ });
+ return window.__html2canvasLoading;
+}
+
+async function shareReceiptImage(){
+ const e=selectedEntry(); if(!e)return toast('Create a donation first');
+ const receipt=document.getElementById('printReceipt');
+ if(!receipt)return toast('Pavti preview is not available');
+
+ try{
+   toast('Creating Pavti image…');
+
+   // IMPORTANT: Capture the actual visible Pavti preview.
+   // This keeps the mobile/desktop logo, Ganpati image, text and spacing
+   // exactly identical to what the user sees on screen.
+   const html2canvas=await loadHtml2Canvas();
+
+   // Wait for every receipt image to finish loading before the capture.
+   const images=[...receipt.querySelectorAll('img')];
+   await Promise.all(images.map(img=>{
+     if(img.complete)return Promise.resolve();
+     return new Promise(resolve=>{
+       img.addEventListener('load',resolve,{once:true});
+       img.addEventListener('error',resolve,{once:true});
+     });
+   }));
+
+   const canvas=await html2canvas(receipt,{
+     backgroundColor:'#fffdf8',
+     scale:Math.max(2,Math.min(4,window.devicePixelRatio||2)),
+     useCORS:true,
+     allowTaint:false,
+     imageTimeout:15000,
+     logging:false,
+     width:receipt.scrollWidth,
+     height:receipt.scrollHeight,
+     windowWidth:document.documentElement.clientWidth,
+     windowHeight:window.innerHeight
+   });
+
+   // Normalize the captured receipt to a square image without changing
+   // the actual receipt layout. The preview itself is already square.
+   const size=Math.max(canvas.width,canvas.height);
+   const finalCanvas=document.createElement('canvas');
+   finalCanvas.width=size;
+   finalCanvas.height=size;
+   const fctx=finalCanvas.getContext('2d');
+   fctx.fillStyle='#fffdf8';
+   fctx.fillRect(0,0,size,size);
+   fctx.drawImage(canvas,(size-canvas.width)/2,(size-canvas.height)/2);
+
+   const imageBlob=await new Promise((resolve,reject)=>{
+     finalCanvas.toBlob(blob=>blob?resolve(blob):reject(new Error('Image conversion failed')),'image/png');
+   });
+   const file=new File([imageBlob],e.receiptNo+'.png',{type:'image/png'});
+
+   // Share ONLY the actual Pavti image. No pre-filled WhatsApp message.
+   if(navigator.canShare && navigator.canShare({files:[file]})){
+     try{
+       await navigator.share({
+         title:'देणगी पावती '+e.receiptNo,
+         files:[file]
+       });
+       return;
+     }catch(err){
+       if(err && err.name==='AbortError')return;
+     }
+   }
+
+   // Browser fallback: save only the captured Pavti image.
+   const url=URL.createObjectURL(imageBlob);
+   const a=document.createElement('a');
+   a.href=url;
+   a.download=e.receiptNo+'.png';
+   a.click();
+   setTimeout(()=>URL.revokeObjectURL(url),2000);
+   toast('Pavti image saved');
+ }catch(err){
+   console.error('Pavti image capture failed:',err);
+   toast('Could not create Pavti image');
+ }
+}
+
+function renderSettings(){
+ let s=state.settings, t=state.template||{};
+ document.getElementById('settings').innerHTML=`<div class="grid two">
+ <div class="card"><div class="section-title">Mandal Details</div><form class="form two-col" onsubmit="saveSettings(event)">
+ <label>Mandal Name*<input required name="mandalName" value="${esc(s.mandalName)}"></label><label>Top Center Text<input name="shreeGaneshText" value="${esc(s.shreeGaneshText||' || श्री गणेशाय नमः || ')}"></label><label>Utsav Year<input name="year" value="${esc(s.year)}"></label><label>स्थापना वर्ष<input name="establishmentYear" value="${esc(s.establishmentYear||'')}"></label>
+ <label class="full">Subtitle<input name="subtitle" value="${esc(s.subtitle)}"></label><label class="full">Address<textarea name="address" rows="2">${esc(s.address)}</textarea></label><label>Phone<input name="phone" value="${esc(s.phone)}"></label><label>Receipt Prefix<input name="receiptPrefix" value="${esc(s.receiptPrefix)}"></label>
+ <label>Thank-you message<textarea name="thanks" rows="2">${esc(s.thanks)}</textarea></label><label>Designation<textarea name="designation" rows="2">${esc(s.designation)}</textarea></label>
+ <label>Logo<input class="file" type="file" accept="image/*" onchange="readImage(event,'logo')">${s.logo?`<img class="logo-preview" src="${s.logo}">`:''}</label>
+ <label>Ganpati Photo<input class="file" type="file" accept="image/*" onchange="readImage(event,'ganpati')">${s.ganpati?`<img class="logo-preview" src="${s.ganpati}">`:''}</label>
+ <label>Signature<input class="file" type="file" accept="image/*" onchange="readImage(event,'signature')">${s.signature?`<img class="logo-preview" src="${s.signature}">`:''}</label>
+ <label class="full">Footer<input name="footer" value="${esc(s.footer)}"></label>
+ <div class="full"><button class="btn primary" type="submit">Save Mandal Settings</button></div></form></div>
+
+ <div class="card"><div class="section-title">🎨 Full Pavti Designer</div>
+ <div class="designer-shell">
+  <div>
+   <div class="designer-section"><b>Colors</b><div class="designer-grid" style="margin-top:9px">
+    <label>Accent / Border<input id="pdAccent" type="color" value="${esc(t.accent||'#e56b22')}" oninput="designerLive()"></label>
+    <label>Receipt Background<input id="pdBg" type="color" value="${esc(t.bg||'#fffdf8')}" oninput="designerLive()"></label>
+    <label>Text Color<input id="pdText" type="color" value="${esc(t.text||'#2f261f')}" oninput="designerLive()"></label>
+    <label>Line Color<input id="pdLine" type="color" value="${esc(t.line||'#efb48b')}" oninput="designerLive()"></label>
+   </div></div>
+   <div class="designer-section"><b>Size &amp; Shape</b><div class="designer-grid" style="margin-top:9px">
+    <label>Title Size<input id="pdTitle" type="range" min="22" max="46" value="${t.titleSize||34}" oninput="designerLive()"><output id="pdTitleOut">${t.titleSize||34}px</output></label>
+    <label>Body Size<input id="pdBody" type="range" min="11" max="22" value="${t.bodySize||15}" oninput="designerLive()"><output id="pdBodyOut">${t.bodySize||15}px</output></label>
+    <label>Border Width<input id="pdBorder" type="range" min="1" max="8" value="${t.borderWidth||5}" oninput="designerLive()"><output id="pdBorderOut">${t.borderWidth||5}px</output></label>
+    <label>Corner Radius<input id="pdRadius" type="range" min="0" max="24" value="${t.radius||12}" oninput="designerLive()"><output id="pdRadiusOut">${t.radius||12}px</output></label>
+   </div></div>
+   <div class="designer-section"><b>Position &amp; Visibility</b><div class="designer-grid" style="margin-top:9px">
+    <label>Logo Size<input id="pdLogoSize" type="range" min="70" max="160" value="${t.logoSize||135}" oninput="designerLive()"><output id="pdLogoSizeOut">${t.logoSize||135}px</output></label>
+    <label>Ganpati Size<input id="pdGanpatiSize" type="range" min="70" max="160" value="${t.ganpatiSize||135}" oninput="designerLive()"><output id="pdGanpatiSizeOut">${t.ganpatiSize||135}px</output></label>
+    <label>Logo X<input id="pdLogoX" type="range" min="-40" max="40" value="${t.logoX||0}" oninput="designerLive()"><output id="pdLogoXOut">${t.logoX||0}px</output></label>
+    <label>Ganpati X<input id="pdGanpatiX" type="range" min="-40" max="40" value="${t.ganpatiX||0}" oninput="designerLive()"><output id="pdGanpatiXOut">${t.ganpatiX||0}px</output></label>
+   </div></div>
+   <div class="designer-section"><b>Receipt Text</b><div class="designer-grid" style="margin-top:9px">
+    <label class="full">Top Center Text<input id="pdTopText" value="${esc(s.shreeGaneshText||'')}" oninput="designerLive()"></label>
+    <label class="full">Footer Text<input id="pdFooterText" value="${esc(s.footer||'')}" oninput="designerLive()"></label>
+    <label class="full">Thank-you Text<textarea id="pdThanks" rows="2" oninput="designerLive()">${esc(s.thanks||'')}</textarea></label>
+   </div></div>
+   <div class="designer-actions"><button class="btn primary" onclick="savePavtiDesigner()">💾 Save Design</button><button class="btn" onclick="resetPavtiDesigner()">↺ Reset Design</button><button class="btn dark" onclick="showPage('receipt')">👁️ Open Full Preview</button></div>
+  </div>
+  <div class="designer-preview" id="designerPreview"><div class="help" style="padding:15px">Select a Pavti from the Pavti page to preview it here.</div></div>
+ </div></div></div>
+ <div class="card" style="margin-top:16px"><div class="section-title">Data Management</div><button class="btn primary" onclick="backup()">⬇️ Backup All Data</button> <button class="btn" onclick="document.getElementById('restoreFile').click()">⬆️ Restore Backup</button> <input id="restoreFile" type="file" accept=".json" style="display:none" onchange="restore(event)"> <button class="btn danger" onclick="wipe()">🗑️ Delete All Local Data</button></div>`;
+ designerLive();
+}
+
+function designerRead(){
+ const t=state.template||{};
+ return {
+  accent:document.getElementById('pdAccent')?.value||t.accent||'#e56b22',
+  bg:document.getElementById('pdBg')?.value||t.bg||'#fffdf8',
+  text:document.getElementById('pdText')?.value||t.text||'#2f261f',
+  line:document.getElementById('pdLine')?.value||t.line||'#efb48b',
+  titleSize:+(document.getElementById('pdTitle')?.value||t.titleSize||34),
+  bodySize:+(document.getElementById('pdBody')?.value||t.bodySize||15),
+  borderWidth:+(document.getElementById('pdBorder')?.value||t.borderWidth||5),
+  radius:+(document.getElementById('pdRadius')?.value||t.radius||12),
+  logoSize:+(document.getElementById('pdLogoSize')?.value||t.logoSize||135),
+  ganpatiSize:+(document.getElementById('pdGanpatiSize')?.value||t.ganpatiSize||135),
+  logoX:+(document.getElementById('pdLogoX')?.value||t.logoX||0),
+  ganpatiX:+(document.getElementById('pdGanpatiX')?.value||t.ganpatiX||0)
+ };
+}
+function designerLive(){
+ const d=designerRead();
+ ['pdTitle','pdBody','pdBorder','pdRadius','pdLogoSize','pdGanpatiSize','pdLogoX','pdGanpatiX'].forEach(id=>{
+  const e=document.getElementById(id),o=document.getElementById(id+'Out');if(e&&o)o.textContent=e.value+'px';
+ });
+ state.template=Object.assign(state.template||{},d);
+ state.settings.shreeGaneshText=document.getElementById('pdTopText')?.value??state.settings.shreeGaneshText;
+ state.settings.footer=document.getElementById('pdFooterText')?.value??state.settings.footer;
+ state.settings.thanks=document.getElementById('pdThanks')?.value??state.settings.thanks;
+ const e=selectedEntry();
+ const box=document.getElementById('designerPreview');
+ if(box && e){
+   box.innerHTML=`<div class="designer-preview-stage">${receiptHTML(e)}</div>`;
+   const stage=box.querySelector('.designer-preview-stage');
+   const r=stage?.querySelector('.reference-receipt');
+   if(r){
+    r.style.background=d.bg;r.style.color=d.text;r.style.borderColor=d.accent;r.style.borderWidth=d.borderWidth+'px';r.style.borderRadius=d.radius+'px';
+    const logo=r.querySelector('.ref-logo img');if(logo){logo.style.width=d.logoSize+'px';logo.style.height=d.logoSize+'px';logo.style.transform=`translateX(${d.logoX}px)`}
+    const gan=r.querySelector('.ref-ganpati img');if(gan){gan.style.width=d.ganpatiSize+'px';gan.style.height=d.ganpatiSize+'px';gan.style.transform=`translateX(${d.ganpatiX}px)`}
+    const title=r.querySelector('.ref-title h2');if(title)title.style.fontSize=d.titleSize+'px';
+    r.querySelectorAll('.ref-row,.ref-meta').forEach(x=>x.style.fontSize=d.bodySize+'px');
+    r.querySelectorAll('.ref-divider:before,.ref-divider:after').forEach(x=>x.style.background=d.line);
+
+    // Full-width editor preview: do NOT use CSS transform scaling here.
+    // Transform scaling was making the Pavti appear tiny inside the preview box.
+    // Let the responsive Pavti canvas use the full available width instead.
+    r.style.setProperty('width','100%','important');
+    r.style.setProperty('height','auto','important');
+    r.style.setProperty('min-height','0','important');
+    r.style.setProperty('aspect-ratio','1 / 1');
+    r.style.setProperty('transform','none','important');
+    r.style.setProperty('transform-origin','top center');
+    r.style.margin='0';
+    r.style.boxSizing='border-box';
+    stage.style.width='100%';
+    stage.style.height='auto';
+    stage.style.flex='1 1 100%';
+   }
+ }
+}
+function savePavtiDesigner(){
+ const d=designerRead();
+ state.template=Object.assign(state.template||{},d);
+ state.settings.shreeGaneshText=document.getElementById('pdTopText')?.value??state.settings.shreeGaneshText;
+ state.settings.footer=document.getElementById('pdFooterText')?.value??state.settings.footer;
+ state.settings.thanks=document.getElementById('pdThanks')?.value??state.settings.thanks;
+ save();toast('Pavti design saved');renderSettings();
+}
+function resetPavtiDesigner(){
+ state.template={accent:'#e56b22',bg:'#fffdf8',text:'#2f261f',line:'#efb48b',titleSize:34,bodySize:15,borderWidth:5,radius:12,logoSize:135,ganpatiSize:135,logoX:0,ganpatiX:0};
+ save();renderSettings();toast('Pavti design reset');
+}
+
+function saveSettings(ev){
+ ev.preventDefault();
+ let f=new FormData(ev.target);
+ for(let [k,v] of f)state.settings[k]=v;
+ state.settings.establishmentYear=state.settings.establishmentYear||'';
+ save();
+ render();
+ toast('Mandal settings saved');
+}
+function readImage(ev,key){let file=ev.target.files[0];if(!file)return;let r=new FileReader();r.onload=()=>{state.settings[key]=r.result;save();renderSettings();toast(key+' uploaded')};r.readAsDataURL(file)}
+function backup(){let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`ganpati-mandal-backup-${state.settings.year}.json`;a.click();URL.revokeObjectURL(a.href)}
+function restore(ev){let file=ev.target.files[0];if(!file)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.settings||!x.entries||!x.expenses)throw Error();state=x;save();render();toast('Backup restored')}catch(e){alert('Invalid backup file')}};r.readAsText(file)}
+function wipe(){if(confirm('This will permanently delete all local data. Continue?')&&confirm('Are you absolutely sure?')){state=defaults();save();render();toast('All data deleted')}}
+function exportCSV(type){
+ let rows=type==='entries'?state.entries:state.expenses;if(!rows.length)return toast('Nothing to export');
+ let keys=Object.keys(rows[0]),csv=[keys.join(','),...rows.map(o=>keys.map(k=>`"${String(o[k]??'').replace(/"/g,'""')}"`).join(','))].join('\\n');
+ let blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${type}-${state.settings.year}.csv`;a.click();URL.revokeObjectURL(a.href)
+}
+render();
+
+// ==================== AUTH + STORAGE LAYER ====================
+(function(){
+ const LOCAL_KEY='ganpati_mandal_manager_v2_local';
+ const CLOUD_TABLE='mandal_data';
+ const ASSET_BUCKET='mandal-assets';
+ window.mmMode='locked';
+ window.mmUser=null;
+
+ function getLocalData(){try{return JSON.parse(localStorage.getItem(LOCAL_KEY)||'null')}catch(e){return null}}
+ function saveLocalData(){localStorage.setItem(LOCAL_KEY,JSON.stringify(state))}
+ function showAuth(){const el=document.getElementById('authScreen');if(el)el.style.display='flex';const app=document.querySelector('.app');if(app)app.style.display='none'}
+ function hideAuth(){const el=document.getElementById('authScreen');if(el)el.style.display='none';const app=document.querySelector('.app');if(app)app.style.display=''}
+ function setBadge(){
+   const b=document.getElementById('accountModeBadge');if(!b)return;
+   if(window.mmMode==='cloud'){b.className='cloud-badge';b.textContent='☁️ Supabase Cloud'}
+   else{b.className='local-badge';b.textContent='🔐 Local Mode'}
+ }
+ function setStatus(t){const s=document.getElementById('authStatus');if(s)s.textContent=t}
+ function assetStatus(t){const s=document.getElementById('storageStatus');if(s)s.textContent=t}
+
+ function loadLocal(){
+   const d=getLocalData();
+   if(d)Object.assign(state,d);
+   window.mmMode='local';window.mmUser=null;setBadge();hideAuth();render();
+ }
+
+ async function signAsset(path){
+   if(!path)return '';
+   const {data,error}=await window.mmSupabase.storage.from(ASSET_BUCKET).createSignedUrl(path,60*60);
+   if(error)throw error;
+   return data.signedUrl;
+ }
+
+ async function hydrateAssets(){
+   if(window.mmMode!=='cloud'||!window.mmUser)return;
+   const s=state.settings||{};
+   for(const key of ['logo','ganpati','signature']){
+     const path=s[key+'Path'];
+     if(path){
+       try{s[key]=await signAsset(path)}catch(e){console.warn('Could not load '+key,e)}
+     }
+   }
+ }
+
+ function dataUrlToBlob(dataUrl){
+   const parts=dataUrl.split(',');
+   const mime=(parts[0].match(/:(.*?);/)||[])[1]||'image/png';
+   const bin=atob(parts[1]||'');
+   const arr=new Uint8Array(bin.length);
+   for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+   return new Blob([arr],{type:mime});
+ }
+
+ async function uploadAsset(key,dataUrl){
+   if(!dataUrl || !dataUrl.startsWith('data:') || !window.mmUser)return null;
+   const ext=(dataUrl.match(/^data:image\/([^;]+)/)||[])[1]||'png';
+   const safeExt=ext==='jpeg'?'jpg':ext;
+   const path=window.mmUser.id+'/'+key+'-'+Date.now()+'.'+safeExt;
+   const blob=dataUrlToBlob(dataUrl);
+   const {error}=await window.mmSupabase.storage.from(ASSET_BUCKET).upload(path,blob,{contentType:blob.type,upsert:false});
+   if(error)throw error;
+   return path;
+ }
+
+ async function prepareCloudState(){
+   const cloudState=JSON.parse(JSON.stringify(state));
+   cloudState.settings=cloudState.settings||{};
+   for(const key of ['logo','ganpati','signature']){
+     const value=cloudState.settings[key];
+     if(value && value.startsWith && value.startsWith('data:')){
+       assetStatus('Uploading '+key+'…');
+       const path=await uploadAsset(key,value);
+       if(path)cloudState.settings[key+'Path']=path;
+       delete cloudState.settings[key];
+     }
+   }
+   return cloudState;
+ }
+
+ async function loadCloud(user){
+   const {data,error}=await window.mmSupabase.from(CLOUD_TABLE).select('state').eq('user_id',user.id).maybeSingle();
+   if(error)throw error;
+   if(data && data.state)Object.assign(state,data.state);
+   else{
+     const {error:insErr}=await window.mmSupabase.from(CLOUD_TABLE).insert({user_id:user.id,state:state});
+     if(insErr)throw insErr;
+   }
+   window.mmMode='cloud';window.mmUser=user;setBadge();
+   await hydrateAssets();
+   hideAuth();render();
+ }
+
+ let cloudSaveTimer=null;
+ window.persistManagerData=async function(){
+   if(window.mmMode==='cloud'&&window.mmUser){
+     clearTimeout(cloudSaveTimer);
+     cloudSaveTimer=setTimeout(async()=>{
+       try{
+         const cloudState=await prepareCloudState();
+         const {error}=await window.mmSupabase.from(CLOUD_TABLE).upsert(
+           {user_id:window.mmUser.id,state:cloudState,updated_at:new Date().toISOString()},
+           {onConflict:'user_id'}
+         );
+         if(error)throw error;
+         assetStatus('');
+       }catch(e){
+         console.error(e);
+         assetStatus('');
+         toast('Cloud save failed — check your connection');
+       }
+     },150);
+   }else if(window.mmMode==='local')saveLocalData();
+ };
+
+ window.loginLocal=function(){loadLocal()};
+
+ async function cloudAuth(mode){
+   const email=(document.getElementById('cloudEmail')?.value||'').trim();
+   const password=document.getElementById('cloudPassword')?.value||'';
+   if(!email||!password){setStatus('Enter your email and password.');return}
+   try{
+     setStatus(mode==='signup'?'Creating your cloud account…':'Signing in…');
+     const result=mode==='signup'
+       ?await window.mmSupabase.auth.signUp({email,password})
+       :await window.mmSupabase.auth.signInWithPassword({email,password});
+     if(result.error)throw result.error;
+     if(mode==='signup'&&!result.data.session){
+       setStatus('Account created. Check your email to confirm it, then log in.');
+       return;
+     }
+     if(result.data.user)await loadCloud(result.data.user);
+   }catch(err){
+     console.error(err);
+     setStatus(err.message||'Cloud login failed.');
+   }
+ }
+ window.loginCloud=()=>cloudAuth('login');
+ window.signupCloud=()=>cloudAuth('signup');
+
+ window.logoutManager=async function(){
+   if(window.mmMode==='cloud'){
+     try{await window.mmSupabase.auth.signOut()}catch(e){console.error(e)}
+   }
+   window.mmMode='locked';window.mmUser=null;window.selectedReceipt=null;
+   showAuth();
+   setStatus('Logged out. Your Local Mode data is still saved on this browser.');
+ };
+
+ function installPersistHook(){
+   if(window.__mmPersistHook)return;
+   window.__mmPersistHook=true;
+   const originalSave=window.save;
+   window.save=async function(){
+     if(typeof originalSave==='function')originalSave();
+     await window.persistManagerData();
+   };
+ }
+
+ async function bootAuth(){
+   installPersistHook();
+   document.getElementById('cloudLoginBtn')?.addEventListener('click',()=>window.loginCloud());
+   document.getElementById('cloudSignupBtn')?.addEventListener('click',()=>window.signupCloud());
+   document.getElementById('localLoginBtn')?.addEventListener('click',()=>window.loginLocal());
+   const {data}=await window.mmSupabase.auth.getSession();
+   if(data.session){
+     try{await loadCloud(data.session.user)}catch(e){console.error(e);setStatus('Logged in, but cloud data could not be loaded: '+e.message)}
+   }else showAuth();
+   window.mmSupabase.auth.onAuthStateChange(async(event,session)=>{
+     if(event==='SIGNED_OUT'){window.mmMode='locked';window.mmUser=null;showAuth()}
+   });
+ }
+ window.addEventListener('load',()=>setTimeout(bootAuth,150));
+})();
+</script>
+</body>
+</html>
